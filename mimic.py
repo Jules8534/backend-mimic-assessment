@@ -46,28 +46,43 @@ columns, so the output looks better.
 import random
 import sys
 
-__author__ = "???"
+# Authors Chris, Koren, and Brandi
 
 
 def create_mimic_dict(filename):
-    """Returns mimic dict mapping each word to list of words which follow it.
-    For example:
-        Input: "I am a software developer, and I don't care who knows"
-        Output:
-            {
-                "" : ["I"],
-                "I" : ["am", "don't"],
-                "am": ["a"],
-                "a": ["software"],
-                "software" : ["developer,"],
-                "developer," : ["and"],
-                "and" : ["I"],
-                "don't" : ["care"],
-                "care" : ["who"],
-                "who" : ["knows"]
-            }
-    """
-    # +++your code here+++
+    
+    mimic_dict = { }
+    with open(filename, "r") as f:
+        #text = f.read()
+        #print(f)
+
+        for words in f:
+            word_list = words.split()
+            #print(word_list)
+
+            prev = ''
+            for word in word_list:
+                #print(word_list)
+                if not prev in mimic_dict:
+                    mimic_dict[prev] = [word]
+                else:
+                    mimic_dict[prev].append(word)
+                prev = word    
+                #print(word)
+
+
+    return mimic_dict
+
+create_mimic_dict("imdev.txt")
+
+        # for imdev in f:
+        #     shortlist = imdev.split()
+
+        #     for allimdev in shortlist:
+        #         if allimdev in dict:
+        #             dict[allimdev] += 1
+        #         else:
+        #             dict[allimdev] = 1
 
 
 def print_mimic(mimic_dict, start_word):
@@ -78,13 +93,20 @@ def print_mimic(mimic_dict, start_word):
         - Repeat this process 200 times
     """
     # +++your code here+++
-    pass
+    next_list = ''
+    for _ in range(200):
+        print start_word
+        next_list = mimic_dict.get(start_word)
+         
+        if not next_list:
+            next_list = mimic_dict['']
+        start_word = random.choice(next_list)   
 
 
 # Provided main(), calls mimic_dict() and mimic()
 def main():
     if len(sys.argv) != 2:
-        print 'usage: python mimic.py file-to-read'
+        print 'usage: python mimic.py imdev.txt'
         sys.exit(1)
 
     d = create_mimic_dict(sys.argv[1])
@@ -93,3 +115,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#this assessment took me all day to complete.
