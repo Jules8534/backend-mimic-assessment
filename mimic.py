@@ -46,29 +46,26 @@ columns, so the output looks better.
 import random
 import sys
 
-__author__ = "???"
+# Authors Chris, Koren, Brandi, Demo
 
 
 def create_mimic_dict(filename):
-    """Returns mimic dict mapping each word to list of words which follow it.
-    For example:
-        Input: "I am a software developer, and I don't care who knows"
-        Output:
-            {
-                "" : ["I"],
-                "I" : ["am", "don't"],
-                "am": ["a"],
-                "a": ["software"],
-                "software" : ["developer,"],
-                "developer," : ["and"],
-                "and" : ["I"],
-                "don't" : ["care"],
-                "care" : ["who"],
-                "who" : ["knows"]
-            }
-    """
-    # +++your code here+++
+    
+    mimic_dict = {}
+    f = open(filename, 'r')
+    text = f.read()
+    f.close()
+    words = text.split()
+    prev = ''
+    for word in words:
+        if not prev in mimic_dict:
+            mimic_dict[prev] = [word]
+        else:
+            mimic_dict[prev].append(word)
+        prev = word
+    return mimic_dict
 
+    
 
 def print_mimic(mimic_dict, start_word):
     """Given a previously compiled mimic_dict and start_word, prints 200 random words:
@@ -77,14 +74,20 @@ def print_mimic(mimic_dict, start_word):
         - Randomly select a new word from the next-list
         - Repeat this process 200 times
     """
-    # +++your code here+++
-    pass
 
+    for _ in range(200):
+        print start_word,
+        nexts = mimic_dict.get(start_word)
+        if not nexts:
+            nexts = mimic_dict['']
+        start_word = random.choice(nexts)
+
+           
 
 # Provided main(), calls mimic_dict() and mimic()
 def main():
     if len(sys.argv) != 2:
-        print 'usage: python mimic.py file-to-read'
+        print 'usage: python mimic.py alice.txt'
         sys.exit(1)
 
     d = create_mimic_dict(sys.argv[1])
@@ -93,3 +96,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#this assessment took me all day to complete.
