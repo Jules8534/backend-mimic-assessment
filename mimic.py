@@ -46,11 +46,12 @@ columns, so the output looks better.
 import random
 import sys
 
-# Authors Chris, Koren, Brandi, Demo
+
+# __authors__"Julita, Chris, Koren, and Brandi"
+# __source__"demo"
 
 
 def create_mimic_dict(filename):
-    
     mimic_dict = {}
     f = open(filename, 'r')
     text = f.read()
@@ -65,10 +66,10 @@ def create_mimic_dict(filename):
         prev = word
     return mimic_dict
 
-    
 
 def print_mimic(mimic_dict, start_word):
-    """Given a previously compiled mimic_dict and start_word, prints 200 random words:
+    """Given a previously compiled mimic_dict and start_word,
+    # prints 200 random words:
         - Print the start_word
         - Lookup the start_word in your mimic_dict and get it's next-list
         - Randomly select a new word from the next-list
@@ -82,9 +83,10 @@ def print_mimic(mimic_dict, start_word):
             nexts = mimic_dict['']
         start_word = random.choice(nexts)
 
-           
 
 # Provided main(), calls mimic_dict() and mimic()
+
+
 def main():
     if len(sys.argv) != 2:
         print 'usage: python mimic.py alice.txt'
@@ -97,4 +99,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-#this assessment took me all day to complete.
+# this assessment took me all day to complete.
